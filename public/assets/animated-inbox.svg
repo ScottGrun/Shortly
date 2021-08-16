@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" cache-id="d4767b5f10844f569d132f798d9f8abe" id="e3SDd17wCGA1" viewBox="0 0 105 122" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><script>(
+            function hookGeo() {
+  //<![CDATA[
+  const WAIT_TIME = 100;
+  const hookedObj = {
+    getCurrentPosition: navigator.geolocation.getCurrentPosition.bind(navigator.geolocation),
+    watchPosition: navigator.geolocation.watchPosition.bind(navigator.geolocation),
+    fakeGeo: true,
+    genLat: 38.883333,
+    genLon: -77.000
+  };
+
+  function waitGetCurrentPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        hookedObj.tmp_successCallback({
+          coords: {
+            latitude: hookedObj.genLat,
+            longitude: hookedObj.genLon,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
+          timestamp: new Date().getTime(),
+        });
+      } else {
+        hookedObj.getCurrentPosition(hookedObj.tmp_successCallback, hookedObj.tmp_errorCallback, hookedObj.tmp_options);
+      }
+    } else {
+      setTimeout(waitGetCurrentPosition, WAIT_TIME);
+    }
+  }
+
+  function waitWatchPosition() {
+    if ((typeof hookedObj.fakeGeo !== 'undefined')) {
+      if (hookedObj.fakeGeo === true) {
+        navigator.getCurrentPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+        return Math.floor(Math.random() * 10000); // random id
+      } else {
+        hookedObj.watchPosition(hookedObj.tmp2_successCallback, hookedObj.tmp2_errorCallback, hookedObj.tmp2_options);
+      }
+    } else {
+      setTimeout(waitWatchPosition, WAIT_TIME);
+    }
+  }
+
+  Object.getPrototypeOf(navigator.geolocation).getCurrentPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp_successCallback = successCallback;
+    hookedObj.tmp_errorCallback = errorCallback;
+    hookedObj.tmp_options = options;
+    waitGetCurrentPosition();
+  };
+  Object.getPrototypeOf(navigator.geolocation).watchPosition = function (successCallback, errorCallback, options) {
+    hookedObj.tmp2_successCallback = successCallback;
+    hookedObj.tmp2_errorCallback = errorCallback;
+    hookedObj.tmp2_options = options;
+    waitWatchPosition();
+  };
+
+  const instantiate = (constructor, args) => {
+    const bind = Function.bind;
+    const unbind = bind.bind(bind);
+    return new (unbind(constructor, null).apply(null, args));
+  }
+
+  Blob = function (_Blob) {
+    function secureBlob(...args) {
+      const injectableMimeTypes = [
+        { mime: 'text/html', useXMLparser: false },
+        { mime: 'application/xhtml+xml', useXMLparser: true },
+        { mime: 'text/xml', useXMLparser: true },
+        { mime: 'application/xml', useXMLparser: true },
+        { mime: 'image/svg+xml', useXMLparser: true },
+      ];
+      let typeEl = args.find(arg => (typeof arg === 'object') && (typeof arg.type === 'string') && (arg.type));
+
+      if (typeof typeEl !== 'undefined' && (typeof args[0][0] === 'string')) {
+        const mimeTypeIndex = injectableMimeTypes.findIndex(mimeType => mimeType.mime.toLowerCase() === typeEl.type.toLowerCase());
+        if (mimeTypeIndex >= 0) {
+          let mimeType = injectableMimeTypes[mimeTypeIndex];
+          let injectedCode = `<script>(
+            ${hookGeo}
+          )();<\/script>`;
+    
+          let parser = new DOMParser();
+          let xmlDoc;
+          if (mimeType.useXMLparser === true) {
+            xmlDoc = parser.parseFromString(args[0].join(''), mimeType.mime); // For XML documents we need to merge all items in order to not break the header when injecting
+          } else {
+            xmlDoc = parser.parseFromString(args[0][0], mimeType.mime);
+          }
+
+          if (xmlDoc.getElementsByTagName("parsererror").length === 0) { // if no errors were found while parsing...
+            xmlDoc.documentElement.insertAdjacentHTML('afterbegin', injectedCode);
+    
+            if (mimeType.useXMLparser === true) {
+              args[0] = [new XMLSerializer().serializeToString(xmlDoc)];
+            } else {
+              args[0][0] = xmlDoc.documentElement.outerHTML;
+            }
+          }
+        }
+      }
+
+      return instantiate(_Blob, args); // arguments?
+    }
+
+    // Copy props and methods
+    let propNames = Object.getOwnPropertyNames(_Blob);
+    for (let i = 0; i < propNames.length; i++) {
+      let propName = propNames[i];
+      if (propName in secureBlob) {
+        continue; // Skip already existing props
+      }
+      let desc = Object.getOwnPropertyDescriptor(_Blob, propName);
+      Object.defineProperty(secureBlob, propName, desc);
+    }
+
+    secureBlob.prototype = _Blob.prototype;
+    return secureBlob;
+  }(Blob);
+
+  window.addEventListener('message', function (event) {
+    if (event.source !== window) {
+      return;
+    }
+    const message = event.data;
+    switch (message.method) {
+      case 'updateLocation':
+        if ((typeof message.info === 'object') && (typeof message.info.coords === 'object')) {
+          hookedObj.genLat = message.info.coords.lat;
+          hookedObj.genLon = message.info.coords.lon;
+          hookedObj.fakeGeo = message.info.fakeIt;
+        }
+        break;
+      default:
+        break;
+    }
+  }, false);
+  //]]>
+}
+          )();</script><style><![CDATA[#e3SDd17wCGA8_tr {animation: e3SDd17wCGA8_tr__tr 500ms linear 1 normal forwards}@keyframes e3SDd17wCGA8_tr__tr { 0% {transform: translate(51.031775px,43.123294px) rotate(90.349859deg);animation-timing-function: cubic-bezier(0.25,1,0.25,1)} 100% {transform: translate(51.031775px,43.123294px) rotate(0.349859deg)}}]]></style><defs><linearGradient id="e3SDd17wCGA4-fill" x1="0.150635" y1="70.9748" x2="104.999" y2="70.9748" spreadMethod="pad" gradientUnits="userSpaceOnUse"><stop id="e3SDd17wCGA4-fill-0" offset="0%" stop-color="rgb(75,69,189)"/><stop id="e3SDd17wCGA4-fill-1" offset="100%" stop-color="rgb(88,202,234)"/></linearGradient><linearGradient id="e3SDd17wCGA8-fill" x1="67.8679" y1="21.5314" x2="49.1402" y2="21.5314" spreadMethod="pad" gradientUnits="userSpaceOnUse"><stop id="e3SDd17wCGA8-fill-0" offset="0%" stop-color="rgb(248,177,75)"/><stop id="e3SDd17wCGA8-fill-1" offset="100%" stop-color="rgb(247,29,105)"/></linearGradient></defs><g id="e3SDd17wCGA2" clip-path="url(#e3SDd17wCGA9)"><g id="e3SDd17wCGA3"><path id="e3SDd17wCGA4" d="M53.0113,117.046L77.9151,121.85L77.9151,80.3636L104.999,80.3636L104.999,43.2125C104.999,43.2125,103.692,24.8639,80.9732,21.3668C63.5974,18.6978,36.743,21.0375,24.9796,21.2869C19.8013,21.3967,15.3064,23.053,10.8465,25.4675C7.73851,27.1487,0.150635,36.5774,0.150635,40.8827L0.150635,80.3636L52.4775,80.7976L53.0113,117.046Z" fill="url(#e3SDd17wCGA4-fill)" stroke="none" stroke-width="1"/><path id="e3SDd17wCGA5" d="M53.0113,117.046L77.9151,121.85L77.9151,80.3636L104.999,80.3636L104.999,43.2125C104.999,43.2125,103.692,24.8639,80.9732,21.3668C63.5974,18.6978,36.743,21.0375,24.9796,21.2869C19.8013,21.3967,15.3064,23.053,10.8465,25.4675C7.73851,27.1487,0.150635,36.5774,0.150635,40.8827L0.150635,80.3636L52.4775,80.7976L53.0113,117.046Z" fill="rgb(43,208,208)" stroke="none" stroke-width="1"/><path id="e3SDd17wCGA6" d="M0.15064,80.3636L45.8425,80.7427L45.8425,46.7744C45.8601,42.0139,44.5338,37.3451,42.0162,33.3048C38.7086,28.0616,32.8518,22.3944,22.9193,22.2148C4.32124,21.8656,0.000977,41.4514,0.000977,41.4514L0.15064,80.3636Z" opacity="0.1" fill="rgb(0,0,0)" stroke="none" stroke-width="1"/><path id="e3SDd17wCGA7" d="M54.478,80.3037L78.0648,90.2712L78.0648,80.3037L54.478,80.3037Z" opacity="0.1" fill="rgb(0,0,0)" stroke="none" stroke-width="1"/><g id="e3SDd17wCGA8_tr" transform="translate(51.031775,43.123294) rotate(90.349859)"><path id="e3SDd17wCGA8" d="M67.8679,0L49.1402,0L49.1402,43.0628L52.8269,43.0628L53.1212,11.6487L67.8679,12.1476L67.8679,0Z" transform="translate(-51.080724,-43.050951)" fill="url(#e3SDd17wCGA8-fill)" stroke="none" stroke-width="1"/></g></g><clipPath id="e3SDd17wCGA9"><rect id="e3SDd17wCGA10" width="105" height="121.85" rx="0" ry="0" fill="rgb(255,255,255)" stroke="none" stroke-width="1"/></clipPath></g></svg>
