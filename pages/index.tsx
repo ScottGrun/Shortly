@@ -109,6 +109,11 @@ const StyledNav = styled(NavBar)`
 	padding: 0 16px;
 	margin: 0 auto;
 	padding-top: 40px;
+
+	@media ${(p) => p.theme.QUERIES.laptopAndUp} {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
 `;
 
 const NavWrapper = styled.div`
@@ -125,6 +130,11 @@ const StyledLandingSection = styled(LandingSection)`
 	@media ${(p) => p.theme.QUERIES.tabletAndUp} {
 		grid-column: 1 / -1;
 	}
+
+	@media ${(p) => p.theme.QUERIES.laptopAndUp} {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
 `;
 
 const StyledMain = styled.main`
@@ -134,6 +144,8 @@ const StyledMain = styled.main`
 
 	@media ${(p) => p.theme.QUERIES.laptopAndUp} {
 		grid-column: 2;
+		padding-left: 24px;
+		padding-right: 24px;
 	}
 `;
 

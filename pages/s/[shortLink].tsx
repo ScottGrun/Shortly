@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { Link } from '@prisma/client';
-import { NextPageContext } from 'next';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 
 import prisma from '../../lib/prisma';
@@ -24,7 +24,7 @@ export const Url: React.FC<Props> = ({ link }) => {
 	return <div></div>;
 };
 
-export const getServerSideProps = async (ctx: NextPageContext) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
 	const { shortLink } = ctx.query;
 
 	const link = await prisma.link.findUnique({

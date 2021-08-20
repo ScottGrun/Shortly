@@ -8,7 +8,7 @@ export interface ButtonProps {
 	children: React.ReactNode;
 	variant: 'primary' | 'secondary';
 	className?: string;
-	onClick?: () => any;
+	onClick?: () => void;
 	type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
