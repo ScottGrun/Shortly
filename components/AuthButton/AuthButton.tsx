@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { btnTextStyles } from '../../styles/typography';
 interface AuthButtonProps {
-	children: React.ReactNode | string;
+	children?: React.ReactNode | string;
 	imgSrc?: string;
 	altText?: string;
 	onClick?: () => void;
@@ -16,9 +16,10 @@ export const AuthButton: React.FC<AuthButtonProps> = ({
 	imgSrc,
 	altText,
 	onClick,
+	props,
 }) => {
 	return (
-		<Wrapper onClick={onClick}>
+		<Wrapper {...props} onClick={onClick}>
 			{imgSrc && (
 				<Image
 					src={imgSrc}
