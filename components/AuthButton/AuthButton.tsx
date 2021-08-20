@@ -9,6 +9,7 @@ interface AuthButtonProps {
 	imgSrc?: string;
 	altText?: string;
 	onClick?: () => void;
+	props: any;
 }
 
 export const AuthButton: React.FC<AuthButtonProps> = ({
