@@ -17,10 +17,7 @@ interface ModalProps {
 	setShowDialog: Dispatch<SetStateAction<boolean>>;
 }
 
-export const LoginModal: React.FC<ModalProps> = ({
-	showDialog,
-	setShowDialog,
-}) => {
+export const LoginModal = ({ showDialog, setShowDialog }: ModalProps) => {
 	const close = () => setShowDialog(false);
 
 	const handleSubmit = (e: React.SyntheticEvent) => {
