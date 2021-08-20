@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { btnTextStyles } from '../../styles/typography';
 interface AuthButtonProps {
-	children: React.ReactNode;
+	children: React.ReactNode | string;
 	imgSrc?: string;
 	altText?: string;
 	onClick?: () => void;
