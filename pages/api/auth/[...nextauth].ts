@@ -1,6 +1,6 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { NextApiHandler } from 'next';
-import NextAuth, { User as NextAuthUser } from 'next-auth';
+import NextAuth, { Profile, User as NextAuthUser } from 'next-auth';
 import Providers from 'next-auth/providers';
 
 import prisma from '../../../lib/prisma';
@@ -18,8 +18,10 @@ const options = {
             clientId: process.env.GITHUB_ID,
             clientSecret: process.env.GITHUB_SECRET,
             scope: 'read:user',
-            profile(profile) {
+            profile(profile: Profile) {
                 return {
+                    //@ts-expect-error Need to ignore the error type of Object Unkown error below due to the current next-auth issue here
+                    // https://github.com/nextauthjs/adapters/issues/83
                     id: profile.id.toString(),
                     name: profile.name || profile.login,
                     email: profile.email,

@@ -199,7 +199,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 	const user = await prisma.session.findUnique({
 		where: {
-			accessToken: session.accessToken,
+			accessToken: session.accessToken as string,
 		},
 		select: {
 			userId: true,

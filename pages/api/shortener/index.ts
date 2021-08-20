@@ -9,12 +9,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const session = await getSession({ req });
   const shortLink = `https://wwww.${req.headers.host}/s/${nanoid(11)}`
   const longUrl = req.body.longUrl;
-  let user;
+  let user = null;
 
   if (session) {
     user = await prisma.session.findUnique({
       where: {
-        accessToken: session.accessToken,
+        accessToken: session.accessToken as string,
       },
       select: {
         userId: true,
@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const shortenedLink = await prisma.link.create({
     data: {
-      userId: session ? user.userId : "GUEST",
+      userId: user ? user.userId : "GUEST",
       sourceLink: longUrl,
       shortLink: shortLink,
     }

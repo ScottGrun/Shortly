@@ -9,7 +9,7 @@ interface AuthButtonProps {
 	imgSrc?: string;
 	altText?: string;
 	onClick?: () => void;
-	props: any;
+	type?: 'submit' | 'reset' | 'button';
 }
 
 export const AuthButton: React.FC<AuthButtonProps> = ({
@@ -17,10 +17,10 @@ export const AuthButton: React.FC<AuthButtonProps> = ({
 	imgSrc,
 	altText,
 	onClick,
-	props,
+	type,
 }) => {
 	return (
-		<Wrapper {...props} onClick={onClick}>
+		<Wrapper type={type} onClick={onClick}>
 			{imgSrc && (
 				<Image
 					src={imgSrc}

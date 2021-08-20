@@ -17,7 +17,10 @@ interface ModalProps {
 	setShowDialog: Dispatch<SetStateAction<boolean>>;
 }
 
-export const LoginModal = ({ showDialog, setShowDialog }: ModalProps) => {
+export const LoginModal: React.FC<ModalProps> = ({
+	showDialog,
+	setShowDialog,
+}) => {
 	const close = () => setShowDialog(false);
 
 	const handleSubmit = (e: React.SyntheticEvent) => {
@@ -50,7 +53,6 @@ export const LoginModal = ({ showDialog, setShowDialog }: ModalProps) => {
 							type="email"
 							placeholder="superlegitemail@example.com"
 							name="email"
-							id="email"
 							required
 						/>
 						<AuthButton type="submit">Sign in with A Magic Link</AuthButton>
@@ -82,19 +84,25 @@ const Wrapper = styled(DialogOverlay)`
 `;
 
 const StyledDialog = styled(DialogContent)`
+	height: 100vh;
+	width: 100%;
+	margin-top: 0;
+
 	position: relative;
 	display: flex;
 	flex-flow: column;
 	justify-content: center;
 	align-items: center;
 
-	width: auto;
-	max-width: 450px;
-	height: 450px;
-	margin-top: calc(50vh - 300px);
-	border-radius: 10px;
-	padding: 0 !important;
-	box-shadow: rgba(59, 59, 65, 0.2) 0px 7px 29px 0px;
+	@media ${(p) => p.theme.QUERIES.tabletAndUp} {
+		width: auto;
+		max-width: 450px;
+		height: 450px;
+		margin-top: calc(50vh - 300px);
+
+		border-radius: 10px;
+		box-shadow: rgba(59, 59, 65, 0.2) 0px 7px 29px 0px;
+	}
 `;
 
 const ButtonContainer = styled.div`
