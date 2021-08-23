@@ -13,6 +13,7 @@ import { Footer } from '../components/Footer/Footer';
 import { LandingSection } from '../components/LandingSection/LandingSection';
 import { LinkShortener } from '../components/LinkShortener/LinkShortener';
 import { LoginModal } from '../components/LoginModal/LoginModal';
+import { MobileMenu } from '../components/MobileMenu/MobileMenu';
 import { NavBar } from '../components/NavBar/NavBar';
 import { ShortenedLink } from '../components/ShortenedLink/ShortenedLink';
 import { ShortenedLinksContainer } from '../components/ShortenedLinksContainer/ShortenedLinksContainer';
@@ -29,6 +30,7 @@ export default function Home({
 }: HomePageTypes): ReactElement {
 	const [userLinks, setUserLinks] = useState<Link[]>([]);
 	const [showDialog, setShowDialog] = useState(false);
+	const [menuOpen, setMenuOpen] = useState(false);
 
 	useEffect(() => {
 		// if logged in set links to be that of the DB
@@ -46,6 +48,11 @@ export default function Home({
 
 	return (
 		<>
+			<MobileMenu
+				setShowDialog={setShowDialog}
+				menuOpen={menuOpen}
+				setMenuOpen={setMenuOpen}
+			/>
 			<LoginModal showDialog={showDialog} setShowDialog={setShowDialog} />
 			<Wrapper>
 				<Head>
@@ -54,7 +61,7 @@ export default function Home({
 					<link rel="icon" href="/favicon.ico" />
 				</Head>
 				<NavWrapper>
-					<StyledNav setShowDialog={setShowDialog} />
+					<StyledNav setShowDialog={setShowDialog} setMenuOpen={setMenuOpen} />
 				</NavWrapper>
 				<StyledLandingSection />
 				<StyledMain>
@@ -107,8 +114,8 @@ const StyledNav = styled(NavBar)`
 	max-width: 1440px;
 
 	padding: 0 16px;
-	margin: 0 auto;
 	padding-top: 40px;
+	margin: 0 auto;
 
 	@media ${(p) => p.theme.QUERIES.laptopAndUp} {
 		padding-left: 24px;

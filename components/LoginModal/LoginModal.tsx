@@ -35,7 +35,7 @@ export const LoginModal: React.FC<ModalProps> = ({
 
 	return (
 		<Wrapper isOpen={showDialog} onDismiss={close}>
-			<StyledDialog>
+			<StyledDialog aria-label="Login modal">
 				<CloseButton onClick={close}>
 					<VisuallyHidden>Close Modal </VisuallyHidden>
 					<Image

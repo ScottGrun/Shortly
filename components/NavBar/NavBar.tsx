@@ -13,15 +13,21 @@ import { Button } from '../Button/Button';
 interface NavBarProps {
 	className?: string;
 	setShowDialog: Dispatch<SetStateAction<boolean>>;
+	setMenuOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const NavBar: React.FC<NavBarProps> = ({ setShowDialog, className }) => {
+export const NavBar: React.FC<NavBarProps> = ({
+	setShowDialog,
+	setMenuOpen,
+	className,
+}) => {
 	const [session] = useSession();
 	const openModal = () => setShowDialog(true);
+	const openMenu = () => setMenuOpen(true);
 
 	return (
 		<Wrapper className={className}>
-			<Image src={logoSrc} layout="intrinsic" alt="The word Shortly" />
+			<Image src={logoSrc} alt="The word Shortly" />
 			<Nav>
 				<NavLinksWrapper>
 					<li>
@@ -52,14 +58,20 @@ export const NavBar: React.FC<NavBarProps> = ({ setShowDialog, className }) => {
 				</>
 			) : (
 				<>
-					<SignUpBtn variant="primary" onClick={() => openModal()}>
+					<SignInBtn variant="primary" onClick={() => openModal()}>
 						Sign In
-					</SignUpBtn>
+					</SignInBtn>
 				</>
 			)}
 
-			<MenuButton>
-				<Image src={menuIconSrc} alt="A menu icon" />
+			<MenuButton onClick={openMenu}>
+				<Image
+					src={menuIconSrc}
+					layout="fixed"
+					width="24"
+					height="21"
+					alt="A menu icon"
+				/>
 			</MenuButton>
 		</Wrapper>
 	);
@@ -73,22 +85,16 @@ const Wrapper = styled.header`
 
 const Nav = styled.nav`
 	display: none;
-
-	@media ${(p) => p.theme.QUERIES.laptopAndUp} {
+	@media ${(p) => p.theme.QUERIES.tabletAndUp} {
 		display: flex;
-
 		margin-left: 45px;
 		margin-right: auto;
 	}
 `;
 
 const NavLinksWrapper = styled.ul`
-	display: none;
-
-	@media ${(p) => p.theme.QUERIES.laptopAndUp} {
-		display: flex;
-		gap: 32px;
-	}
+	display: flex;
+	gap: 32px;
 `;
 
 const NavItem = styled.a`
@@ -101,15 +107,16 @@ const NavItem = styled.a`
 `;
 
 const MenuButton = styled.button`
+	display: flex;
 	margin-left: auto;
-	@media ${(p) => p.theme.QUERIES.laptopAndUp} {
+	@media ${(p) => p.theme.QUERIES.tabletAndUp} {
 		display: none;
 	}
 `;
 
-const SignUpBtn = styled(Button)`
+const SignInBtn = styled(Button)`
 	display: none;
-	@media ${(p) => p.theme.QUERIES.laptopAndUp} {
+	@media ${(p) => p.theme.QUERIES.tabletAndUp} {
 		display: revert;
 	} ;
 `;
@@ -120,7 +127,7 @@ const LogoutBtn = styled(Button)`
 	background-color: ${(p) => p.theme.COLORS.dark[200]};
 	color: ${(p) => p.theme.COLORS.dark[700]};
 
-	@media ${(p) => p.theme.QUERIES.laptopAndUp} {
+	@media ${(p) => p.theme.QUERIES.tabletAndUp} {
 		display: revert;
 	} ;
 `;
@@ -129,9 +136,9 @@ const UserName = styled.p`
 	${navLinkTextStyles};
 	display: none;
 	padding-left: 12px;
-	margin-right: 20px;
+	margin-right: 10px;
 
-	@media ${(p) => p.theme.QUERIES.laptopAndUp} {
+	@media ${(p) => p.theme.QUERIES.tabletAndUp} {
 		display: revert;
 	} ;
 `;
