@@ -25,9 +25,9 @@ const Url: React.FC<Props> = ({ link }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	const { shortLink } = context.query;
+	const { linkId } = context.query;
 
-	if (!shortLink) {
+	if (!linkId) {
 		context.res.statusCode = 302;
 		context.res.setHeader('Location', `/`);
 		return { props: {} };
@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 	const link = await prisma.link.findUnique({
 		where: {
-			shortLink: shortLink as string,
+			id: linkId as string,
 		},
 	});
 

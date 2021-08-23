@@ -6,8 +6,9 @@ import { getSession } from 'next-auth/client'
 import prisma from '../../../lib/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+  const shortId = nanoid(11);
   const session = await getSession({ req });
-  const shortLink = `https://wwww.${req.headers.host}/s/${nanoid(11)}`
+  const shortLink = `https://wwww.${req.headers.host}/s/${shortId}`
   const longUrl = req.body.longUrl;
   let user = null;
 
@@ -26,6 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const shortenedLink = await prisma.link.create({
     data: {
+      id: shortId,
       userId: user ? user.userId : "GUEST",
       sourceLink: longUrl,
       shortLink: shortLink,

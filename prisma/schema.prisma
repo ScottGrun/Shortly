@@ -62,7 +62,7 @@ model VerificationRequest {
 }
 
 model Link {
-  id         String @unique @default(cuid())
+  id         String @unique
   user       User   @relation(fields: [userId], references: [id])
   userId     String
   sourceLink String
