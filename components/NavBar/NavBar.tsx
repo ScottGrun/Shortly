@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { useSession, signOut } from 'next-auth/client';
+import { Session } from 'next-auth';
+import { signOut } from 'next-auth/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -14,20 +15,26 @@ interface NavBarProps {
 	className?: string;
 	setShowDialog: Dispatch<SetStateAction<boolean>>;
 	setMenuOpen: Dispatch<SetStateAction<boolean>>;
+	session: Session;
 }
 
 export const NavBar: React.FC<NavBarProps> = ({
 	setShowDialog,
 	setMenuOpen,
 	className,
+	session,
 }) => {
-	const [session] = useSession();
 	const openModal = () => setShowDialog(true);
 	const openMenu = () => setMenuOpen(true);
 
 	return (
 		<Wrapper className={className}>
-			<Image src={logoSrc} alt="The word Shortly" />
+			<Image
+				src={logoSrc}
+				layout="fixed"
+				priority={true}
+				alt="The word Shortly"
+			/>
 			<Nav>
 				<NavLinksWrapper>
 					<li>

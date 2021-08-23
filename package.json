@@ -8,11 +8,6 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
-		"@next-auth/prisma-adapter": "^0.5.3",
-		"@prisma/client": "^2.29.0",
-		"@reach/dialog": "^0.16.0",
-		"@reach/visually-hidden": "^0.16.0",
-		"@types/styled-components": "^5.1.12",
 		"nanoid": "^3.1.23",
 		"next": "^11.1.0",
 		"next-auth": "^3.28.0",
@@ -24,6 +19,11 @@
 		"@types/react": "17.0.15",
 		"@typescript-eslint/eslint-plugin": "^4.29.1",
 		"@typescript-eslint/parser": "^4.4.1",
+		"@next-auth/prisma-adapter": "^0.5.3",
+		"@prisma/client": "^2.29.0",
+		"@reach/dialog": "^0.16.0",
+		"@reach/visually-hidden": "^0.16.0",
+		"@types/styled-components": "^5.1.12",
 		"babel-eslint": "^10.1.0",
 		"babel-plugin-styled-components": "^1.13.2",
 		"eslint": "^7.8.1",

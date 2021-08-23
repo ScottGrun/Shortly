@@ -79,6 +79,7 @@ html, body, #root,#__next {
   height: 100vh;
 }
 
+
 /* body::-webkit-scrollbar {
   width: 8px;           
 } */

@@ -23,9 +23,7 @@ export const ShortenedLink: React.FC<LinkProps> = ({
 	const handleCopy = () => {
 		setClicked(true);
 
-		navigator.clipboard.writeText(shortLink).then(function (err) {
-			console.error('Async: Could not copy text: ', err);
-		});
+		navigator.clipboard.writeText(shortLink);
 
 		const timer = setTimeout(() => {
 			setClicked(false);

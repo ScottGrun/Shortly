@@ -1,6 +1,5 @@
 import { ReactElement } from 'react';
 
-import { Provider } from 'next-auth/client';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { ThemeProvider } from 'styled-components';
@@ -14,9 +13,7 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
 		<>
 			<GlobalStyle />
 			<ThemeProvider theme={theme}>
-				<Provider session={pageProps.session}>
-					<Component {...pageProps} key={router.query.name} />
-				</Provider>
+				<Component {...pageProps} key={router.query.name} />
 			</ThemeProvider>
 		</>
 	);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useSession } from 'next-auth/client';
+import { Session } from 'next-auth';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -14,10 +14,15 @@ import { Link } from '.prisma/client';
 
 type InputProps = {
 	setUserLinks: React.Dispatch<React.SetStateAction<Link[]>>;
+	session: Session;
+	shortenerFocusRef: any;
 };
 
-export const LinkShortener: React.FC<InputProps> = ({ setUserLinks }) => {
-	const [session] = useSession();
+export const LinkShortener: React.FC<InputProps> = ({
+	setUserLinks,
+	session,
+	shortenerFocusRef,
+}) => {
 	const [sourceLink, setSourceLink] = useState('');
 	const [error, setError] = useState<string | null>(null);
 
@@ -79,6 +84,7 @@ export const LinkShortener: React.FC<InputProps> = ({ setUserLinks }) => {
 					id="longUrl"
 					name="longUrl"
 					value={sourceLink}
+					ref={shortenerFocusRef}
 					onChange={(e) => {
 						handleInputChange(e.target.value);
 					}}

@@ -9,9 +9,13 @@ import { Button, ButtonProps } from '../Button/Button';
 
 type Props = {
 	className?: string;
+	handleFocus: any;
 };
 
-export const LandingSection: React.FC<Props> = ({ className }: Props) => {
+export const LandingSection: React.FC<Props> = ({
+	className,
+	handleFocus,
+}: Props) => {
 	return (
 		<Wrapper className={className}>
 			<InnerLandingWrapper>
@@ -21,6 +25,7 @@ export const LandingSection: React.FC<Props> = ({ className }: Props) => {
 						alt="A person working at a desk"
 						layout="fill"
 						objectFit="contain"
+						priority={true}
 					/>
 				</LandingImgWrapper>
 
@@ -30,7 +35,9 @@ export const LandingSection: React.FC<Props> = ({ className }: Props) => {
 						Build your brand’s recognition and get detailed insights on how your
 						links are performing.
 					</LandingBody>
-					<LandingButton variant="primary">Get Started</LandingButton>
+					<LandingButton variant="primary" onClick={handleFocus}>
+						Get Started
+					</LandingButton>
 				</LandingTextWrapper>
 			</InnerLandingWrapper>
 		</Wrapper>

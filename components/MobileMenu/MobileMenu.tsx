@@ -1,7 +1,8 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 
 import VisuallyHidden from '@reach/visually-hidden';
-import { signOut, useSession } from 'next-auth/client';
+import { Session } from 'next-auth';
+import { signOut } from 'next-auth/client';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -11,16 +12,26 @@ interface Props {
 	setMenuOpen: Dispatch<SetStateAction<boolean>>;
 	setShowDialog: Dispatch<SetStateAction<boolean>>;
 	menuOpen: boolean;
+	session: Session;
 }
 
 export const MobileMenu: React.FC<Props> = ({
 	setMenuOpen,
 	menuOpen,
 	setShowDialog,
+	session,
 }) => {
-	const [session] = useSession();
 	const openModal = () => setShowDialog(true);
 	const closeMenu = () => setMenuOpen(false);
+
+	useEffect(() => {
+		if (menuOpen) {
+			document.body.style.overflow = 'hidden';
+		}
+		return () => {
+			document.body.style.overflow = 'revert';
+		};
+	}, [menuOpen]);
 
 	return (
 		<Wrapper menuOpen={menuOpen}>
@@ -88,7 +99,7 @@ const CloseButton = styled.button`
 
 const Wrapper = styled.nav<{ menuOpen: boolean }>`
 	display: ${(p) => (p.menuOpen ? 'flex' : 'none')};
-	z-index: 1;
+	z-index: 99;
 	position: fixed;
 	flex-flow: column;
 	align-items: center;
