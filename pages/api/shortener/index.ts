@@ -8,7 +8,7 @@ import prisma from '../../../lib/prisma';
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   const shortId = nanoid(11);
   const session = await getSession({ req });
-  const shortLink = `https://wwww.${req.headers.host}/s/${shortId}`
+  const shortLink = `https://${req.headers.host}/s/${shortId}`
   const longUrl = req.body.longUrl;
   let user = null;
 
