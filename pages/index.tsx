@@ -11,7 +11,7 @@ import { CallToActionBanner } from '../components/CallToActionBanner/CallToActio
 import { FeatureSection } from '../components/FeatureSection/FeatureSection';
 import { Footer } from '../components/Footer/Footer';
 import { LandingSection } from '../components/LandingSection/LandingSection';
-import { LinkShortener } from '../components/LinkShortener/LinkShortener';
+import LinkShortener from '../components/LinkShortener/LinkShortener';
 import { LoginModal } from '../components/LoginModal/LoginModal';
 import { MobileMenu } from '../components/MobileMenu/MobileMenu';
 import { NavBar } from '../components/NavBar/NavBar';
@@ -31,11 +31,12 @@ export default function Home({
 	const [userLinks, setUserLinks] = useState<Link[]>([]);
 	const [showDialog, setShowDialog] = useState(false);
 	const [menuOpen, setMenuOpen] = useState(false);
-	const shortenerFocusRef = useRef<HTMLInputElement>();
+	const focusRef = useRef<HTMLInputElement>(null);
 
 	const handleFocus = () => {
-		if (shortenerFocusRef.current) {
-			shortenerFocusRef.current.focus();
+		if (focusRef.current) {
+			focusRef.current.focus();
+			focusRef.current.scrollIntoView({ block: 'center' });
 		}
 	};
 
@@ -78,7 +79,7 @@ export default function Home({
 				<StyledLandingSection handleFocus={handleFocus} />
 				<StyledMain>
 					<LinkShortener
-						shortenerFocusRef={shortenerFocusRef}
+						ref={focusRef}
 						session={session}
 						setUserLinks={setUserLinks}
 					/>

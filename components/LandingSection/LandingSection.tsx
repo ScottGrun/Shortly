@@ -9,7 +9,7 @@ import { Button, ButtonProps } from '../Button/Button';
 
 type Props = {
 	className?: string;
-	handleFocus: any;
+	handleFocus: () => void;
 };
 
 export const LandingSection: React.FC<Props> = ({

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 
 import { Session } from 'next-auth';
 import Image from 'next/image';
@@ -15,14 +15,12 @@ import { Link } from '.prisma/client';
 type InputProps = {
 	setUserLinks: React.Dispatch<React.SetStateAction<Link[]>>;
 	session: Session;
-	shortenerFocusRef: any;
 };
 
-export const LinkShortener: React.FC<InputProps> = ({
-	setUserLinks,
-	session,
-	shortenerFocusRef,
-}) => {
+const LinkShortener: React.ForwardRefRenderFunction<
+	HTMLInputElement,
+	InputProps
+> = ({ setUserLinks, session }, ref) => {
 	const [sourceLink, setSourceLink] = useState('');
 	const [error, setError] = useState<string | null>(null);
 
@@ -84,7 +82,7 @@ export const LinkShortener: React.FC<InputProps> = ({
 					id="longUrl"
 					name="longUrl"
 					value={sourceLink}
-					ref={shortenerFocusRef}
+					ref={ref}
 					onChange={(e) => {
 						handleInputChange(e.target.value);
 					}}
@@ -200,3 +198,5 @@ const ErrorMessage = styled.p<{ error: string | null }>`
 		width: 100%;
 	}
 `;
+
+export default forwardRef(LinkShortener);
