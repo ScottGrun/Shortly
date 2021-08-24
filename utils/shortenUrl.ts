@@ -11,7 +11,4 @@ export const shortenUrl = async (submittedURL: string) => {
 
     return await res.json();
 
-    // if (shortLink) {
-    //     setUserLinks((prev) => [...prev, shortLink]);
-    // }
 };

@@ -122,7 +122,7 @@ const CopyLinkButton = styled(Button)<ButtonProps>`
 			: p.theme.COLORS.primary[900]};
 
 	@media ${(p) => p.theme.QUERIES.tabletAndUp} {
-		min-width: 103px;
+		min-width: 109px;
 		margin: 0;
 	}
 `;

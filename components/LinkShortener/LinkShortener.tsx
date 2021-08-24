@@ -10,6 +10,7 @@ import { errorMsgTextStyles, inputTextStyles } from '../../styles/typography';
 import { shortenUrl } from '../../utils/shortenUrl';
 import { validateUrl } from '../../utils/validateUrl';
 import { Button, ButtonProps } from '../Button/Button';
+import { Spinner } from '../Spinner/Spinner';
 import { Link } from '.prisma/client';
 
 type InputProps = {
@@ -23,6 +24,7 @@ const LinkShortener: React.ForwardRefRenderFunction<
 > = ({ setUserLinks, session }, ref) => {
 	const [sourceLink, setSourceLink] = useState('');
 	const [error, setError] = useState<string | null>(null);
+	const [loading, setLoading] = useState(false);
 
 	const handleInputChange = (url: string) => {
 		setSourceLink(url);
@@ -34,12 +36,13 @@ const LinkShortener: React.ForwardRefRenderFunction<
 
 	const handleSubmit = async (e: React.SyntheticEvent) => {
 		e.preventDefault();
-
 		const target = e.target as typeof e.target & { longUrl: { value: string } };
 		const submittedUrl = target.longUrl.value;
 		const { valid, error } = validateUrl(submittedUrl);
 
 		if (valid) {
+			setLoading(true);
+
 			const { shortLink } = await shortenUrl(submittedUrl);
 
 			if (!session) {
@@ -55,9 +58,11 @@ const LinkShortener: React.ForwardRefRenderFunction<
 			// Update UI with new shortened Link
 			if (shortLink) {
 				setUserLinks((prev) => [...prev, shortLink]);
+				setLoading(false);
 			}
 		} else {
 			setError(error);
+			setLoading(false);
 		}
 	};
 
@@ -90,7 +95,7 @@ const LinkShortener: React.ForwardRefRenderFunction<
 
 				<ErrorMessage error={error}>{error}</ErrorMessage>
 				<SubmitButton variant="primary" type="submit">
-					Shorten Link
+					{loading ? <Spinner /> : 'Shorten Link'}
 				</SubmitButton>
 			</Form>
 		</Wrapper>
