@@ -11,7 +11,8 @@ interface NextAuthUserWithStringId extends NextAuthUser {
 
 const options = {
     pages: {
-        verifyRequest: '/auth/verify'
+        verifyRequest: '/auth/verify',
+        error: "/"
     },
     providers: [
         Providers.GitHub({

@@ -5,6 +5,7 @@ import { GetServerSideProps } from 'next';
 import { Session } from 'next-auth';
 import { getSession } from 'next-auth/client';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import { CallToActionBanner } from '../components/CallToActionBanner/CallToActionBanner';
@@ -32,6 +33,11 @@ export default function Home({
 	const [showDialog, setShowDialog] = useState(false);
 	const [menuOpen, setMenuOpen] = useState(false);
 	const focusRef = useRef<HTMLInputElement>(null);
+	const { error } = useRouter().query;
+
+	useEffect(() => {
+		if (error) setShowDialog(true);
+	}, [error]);
 
 	const handleFocus = () => {
 		if (focusRef.current) {
@@ -67,7 +73,11 @@ export default function Home({
 				menuOpen={menuOpen}
 				setMenuOpen={setMenuOpen}
 			/>
-			<LoginModal showDialog={showDialog} setShowDialog={setShowDialog} />
+			<LoginModal
+				error={error}
+				showDialog={showDialog}
+				setShowDialog={setShowDialog}
+			/>
 			<Wrapper>
 				<NavWrapper>
 					<StyledNav

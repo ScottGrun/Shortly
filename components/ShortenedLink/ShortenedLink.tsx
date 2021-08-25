@@ -60,8 +60,6 @@ const Wrapper = styled.li`
 	@media ${(p) => p.theme.QUERIES.tabletAndUp} {
 		flex-flow: row;
 		align-items: center;
-		/* padding-left: 32px;
-		padding-right: 24px; */
 		padding: 0;
 	}
 `;
@@ -80,9 +78,15 @@ const InnerWrapper = styled.div`
 
 const LinkToShorten = styled.a`
 	${linkTextStyles};
+
+	max-width: 100%;
 	color: ${(p) => p.theme.COLORS.dark[900]};
 	width: fit-content;
 	word-wrap: break-word;
+
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 const ShortLink = styled.a`
@@ -93,6 +97,7 @@ const ShortLink = styled.a`
 
 	@media ${(p) => p.theme.QUERIES.tabletAndUp} {
 		margin-left: auto;
+		padding-left: 120px;
 		margin-right: 24px;
 		word-wrap: break-word;
 		width: fit-content;

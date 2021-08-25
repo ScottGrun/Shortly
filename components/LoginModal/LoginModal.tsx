@@ -11,15 +11,18 @@ import gitHubIconSrc from '../../public/assets/icons/icon-github.svg';
 import googleIconSrc from '../../public/assets/icons/icon-google.svg';
 import { inputTextStyles } from '../../styles/typography';
 import { AuthButton } from '../AuthButton/AuthButton';
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 
 interface ModalProps {
 	showDialog: boolean;
 	setShowDialog: Dispatch<SetStateAction<boolean>>;
+	error: string | string[] | undefined;
 }
 
 export const LoginModal: React.FC<ModalProps> = ({
 	showDialog,
 	setShowDialog,
+	error,
 }) => {
 	const close = () => setShowDialog(false);
 
@@ -36,6 +39,7 @@ export const LoginModal: React.FC<ModalProps> = ({
 	return (
 		<Wrapper isOpen={showDialog} onDismiss={close}>
 			<StyledDialog aria-label="Login modal">
+				{error && <Error error={error} />}
 				<CloseButton onClick={close}>
 					<VisuallyHidden>Close Modal </VisuallyHidden>
 					<Image
@@ -69,11 +73,9 @@ export const LoginModal: React.FC<ModalProps> = ({
 						onClick={() => signIn('google')}
 						imgSrc={googleIconSrc}
 						altText="Gmail's social media icon">
-						Sigin in with Google
+						Sign in with Google
 					</AuthButton>
-					{/*<AuthButton onClick={() => signIn("github")} imgSrc={twitterIconSrc} altText="Twitter's social media icon">Sigin in with Twitter</AuthButton> */}
 				</ButtonContainer>
-				{/* <button onClick={() => signIn("github")}>Sign in with Email</button> */}
 			</StyledDialog>
 		</Wrapper>
 	);
@@ -177,4 +179,8 @@ const StyledInput = styled.input`
 const StyledLabel = styled.label`
 	font-size: ${14 / 16}rem;
 	color: ${(p) => p.theme.COLORS.dark[400]};
+`;
+
+const Error = styled(ErrorMessage)`
+	margin-bottom: 16px;
 `;

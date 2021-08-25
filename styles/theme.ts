@@ -36,7 +36,7 @@ export const theme = {
 			900: "#3A3054",
 			700: "#4B3F6B"
 		},
-		warning: "#F46363",
+		warning: "#df2b2b",
 		dark: {
 			900: "#34313D",
 			800: "#232127",
