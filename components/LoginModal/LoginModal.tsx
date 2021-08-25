@@ -82,13 +82,13 @@ export const LoginModal: React.FC<ModalProps> = ({
 };
 
 const Wrapper = styled(DialogOverlay)`
-	z-index: 10;
+	z-index: 100;
 `;
 
 const StyledDialog = styled(DialogContent)`
 	height: 100vh;
 	width: 100%;
-	margin-top: 0;
+	margin: 0;
 
 	position: relative;
 	display: flex;
@@ -100,6 +100,7 @@ const StyledDialog = styled(DialogContent)`
 		width: auto;
 		max-width: 450px;
 		height: 450px;
+		margin: 0 auto;
 		margin-top: calc(50vh - 300px);
 
 		border-radius: 10px;
