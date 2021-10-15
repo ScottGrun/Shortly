@@ -22,7 +22,7 @@ const options = {
             profile(profile: Profile) {
                 return {
                     //@ts-expect-error Need to ignore the error type of Object Unkown error below due to the current next-auth issue here
-                    // https://github.com/nextauthjs/adapters/issues/83
+                    // https://github.com/nextauthjs/adapters/issues/111
                     id: profile.id.toString(),
                     name: profile.name || profile.login,
                     email: profile.email,
