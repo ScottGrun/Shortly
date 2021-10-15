@@ -44,7 +44,7 @@ Extended Features - Users should be able to:
 
 ### Links
 
-- Live Site URL: [Add live site URL here](https://shortly-scott.vercel.app/)
+- Live Site URL: [Shortly](https://shortly-scott.vercel.app/)
 
 ## My process
 
