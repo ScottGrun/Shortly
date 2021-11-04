@@ -40,8 +40,7 @@ Extended Features - Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://shortly-scott.vercel.app/)
-- Live Site URL: [Add live site URL here](https://paymento.vercel.app)
+- Live Site URL: [Shortly](https://shortly-scottgrun.vercel.app)
 
 ## My process
 
